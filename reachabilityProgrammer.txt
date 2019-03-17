@@ -1,0 +1,76 @@
+public boolean canReachEnd(String start, String end, String[] substitutions){
+	/*
+	 * returns true if the substitutions can get from the start letter to the end letter, with no leftover letters.
+	 * returns false if there is no way for the substitutions to get from the start letter to the end letter, with no leftover letters.
+	 *
+	 /
+}
+
+where each substitution is represented by a String of the format
+A->B which means substitute all A's for B's
+AB...C->D which means substitute all instances of the collection AB...C with D's
+A->BC...D which means substitute all instances of A's with a seperate collection BC...D for each A
+A-> which means substitute all A's for blank, i.e. effectively remove all A's
+
+Worked Example.
+
+Consider we start with the letter A, and want to get to the letter H and
+we have the following substitutions:
+
+A->BC
+B->D
+C->E
+DE->FG
+FG->H
+
+So starting at A...
+A is replaced by a seperate B and C 
+then 
+B can be replaced by D and
+C can be replaced by E
+then 
+the presence of D and E can be replaced by the collection F and G, i.e. D is removed, E is removed, and the collection FG is added.
+then
+the collection FG is replaced with H.
+At this point H is the only letter left, which matches the desired end letter, 
+therefore canReachEnd would return true for this input.
+
+
+Example 1. Does reach, as there is a matching end letter and no residue letters.
+
+start = A
+end = I
+
+subsitutions:
+A->BC 
+BC->D
+D->EF
+E->G
+F->H
+GH->I
+
+Example 2.  Does not reach, due to no matching end letter.
+
+start = A
+end = I
+
+subsitutions:
+A->BC 
+BC->D
+D->EF
+E->G
+F->H
+GH->J
+
+Example 3. Does not reach, due to residue letters.
+
+start = A
+end = I
+
+subsitutions:
+A->BC 
+BC->D
+D->EF
+E->G
+F->H
+GH->IJ
