@@ -45,12 +45,12 @@ public class Substitution {
             this.substitutions = substitutions;
         }
 
-        private String findValidToken(String input) throws Exception{
+        private String findValidToken(String input) {
             currentToken += input.substring(next, next+1);
             next++;
             if (!substitutions.containsKey(currentToken)) {
                 if (next >= input.length()) {
-                    throw new Exception("No valid token found");
+                    return "";
                 }
                 return findValidToken(input);
             } else {
@@ -66,15 +66,16 @@ public class Substitution {
             String output = "";
             currentToken = "";
             next = 0;
-            try {
-                while (next < input.length()) {
-                    String foundToken = findValidToken(input);
+            while (next < input.length()) {
+                String foundToken = findValidToken(input);
+                if (foundToken.equals("")) {
+                    // We were not able to find a token, we ignore the 1st character
+                    next = input.length() - currentToken.length() + 1;
+                    output += currentToken.substring(0, 1);
+                } else {
                     output += substitutions.get(foundToken);
-                    currentToken = "";
                 }
-
-            } catch (Exception e) {
-                output += currentToken;
+                currentToken = "";
             }
             return output;
         }

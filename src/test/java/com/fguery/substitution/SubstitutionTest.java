@@ -79,7 +79,6 @@ public class SubstitutionTest {
     }
 
     @Test
-    @Ignore("this test doesn't pass, but I'm out of time!")
     public void canReachEnd_tolerates_not_substituted_characters() throws Exception {
         String start = "ABA";
         String end = "B";
